@@ -1,0 +1,55 @@
+version: "2"
+
+services:
+  # https://hub.docker.com/r/gitea/gitea
+  server:
+    image: gitea/gitea:1.17.2
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    volumes:
+      - gitea:/data
+    ports:
+      - "80:3000"
+      - "22:22"
+
+  # https://github.com/balenablocks/hostname
+  hostname:
+    build: hostname
+    restart: no
+    labels:
+      io.balena.features.supervisor-api: 1
+    environment:
+      SET_HOSTNAME: gitea
+
+  # https://github.com/klutchell/balena-restic
+  restic:
+    build: restic
+    privileged: true
+    labels:
+      io.balena.features.supervisor-api: 1
+    volumes:
+      - restic-cache:/cache
+      - restic-snapshots:/snapshots
+
+  # https://github.com/klutchell/balena-tailscale
+  tailscale:
+    build: tailscale
+    network_mode: host
+    volumes:
+      - tailscale:/var/lib/tailscale
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+      - net.ipv6.conf.all.forwarding=1
+    labels:
+      - io.balena.features.kernel-modules=1
+    cap_add:
+      - net_admin
+      - sys_module
+
+volumes:
+  gitea:
+  restic-cache:
+  restic-snapshots:
+  tailscale:

@@ -1,0 +1,23 @@
+name: balena
+
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        fleet: [gh_klutchell/gitea-aarch64, gh_klutchell/gitea-amd64]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: balena-io/deploy-to-balena-action@v0.14.0
+        with:
+          balena_token: ${{ secrets.BALENA_API_KEY }}
+          fleet: ${{ matrix.fleet }}
+          create_tag: true
