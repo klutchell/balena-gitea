@@ -23,6 +23,12 @@ When it's done you should be able to access the access the app at <http://gitea.
 
 Documentation for Gitea can be found at <https://docs.gitea.io/>.
 
+### Installation Notes
+
+- On the Initial Configuration page, set `Run As Username` to `gitea`
+- On the Initial Configuration page, set `Server Domain` to the IP of your device
+- On the Initial Configuration page, set `Gitea Base URL` to the IP of your device with the `http://` prefix
+
 ## Customization
 
 ### Environment Variables

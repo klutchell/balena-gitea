@@ -3,15 +3,15 @@ version: "2"
 services:
   # https://hub.docker.com/r/gitea/gitea
   server:
-    image: gitea/gitea:1.17.2
-    environment:
-      - USER_UID=1000
-      - USER_GID=1000
+    image: gitea/gitea:1.17.3-rootless
     volumes:
-      - gitea:/data
+      - gitea-data:/var/lib/gitea
+      - gitea-config:/etc/gitea
     ports:
       - "80:3000"
       - "22:22"
+    # environment:
+    #   - GITEA__server__LOCAL_ROOT_URL=http://localhost:80/
 
   # https://github.com/balenablocks/hostname
   hostname:
@@ -49,7 +49,8 @@ services:
       - sys_module
 
 volumes:
-  gitea:
+  gitea-data:
+  gitea-config:
   restic-cache:
   restic-snapshots:
   tailscale:
