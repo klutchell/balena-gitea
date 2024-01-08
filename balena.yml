@@ -1,6 +1,6 @@
 name: "Gitea"
 type: "sw.application"
-version: 1.21.2
+version: 1.21.3
 description: "Git with a cup of tea"
 post-provisioning: >-
   ## Usage instructions
