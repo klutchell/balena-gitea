@@ -3,7 +3,7 @@ version: "2"
 services:
   # https://hub.docker.com/r/gitea/gitea
   server:
-    image: gitea/gitea:1.21.11-rootless@sha256:ff14c3531ed8615261e6e1db617efa1eb9a9c23d5b8fe7f2742c02b190837aea
+    image: gitea/gitea:1.22.2-rootless@sha256:75b1e8f14a63eb33da4dc5d1032212a97fe322d76cf3c5b080611771e7a2f154
     volumes:
       - gitea-data:/var/lib/gitea
       - gitea-config:/etc/gitea
